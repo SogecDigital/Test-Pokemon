@@ -4,54 +4,60 @@ namespace App\Entity;
 
 use App\Repository\PokemonRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
+/** A pokemon's Type. */
 #[ORM\Entity(repositoryClass: PokemonRepository::class)]
+#[ApiResource(
+    collectionOperations: ['get'],
+    itemOperations: ['get']
+)]
+
 class Pokemon
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    private ?string $name;
 
     #[ORM\Column(type: 'integer')]
-    private $total;
+    private ?int $total;
 
     #[ORM\Column(type: 'integer')]
-    private $HP;
+    private ?int $HP;
 
     #[ORM\Column(type: 'integer')]
-    private $attack;
+    private ?int $attack;
 
     #[ORM\Column(type: 'integer')]
-    private $defense;
+    private ?int $defense;
 
     #[ORM\Column(type: 'integer')]
-    private $spAtk;
+    private ?int $spAtk;
 
     #[ORM\Column(type: 'integer')]
-    private $spDef;
+    private ?int $spDef;
 
     #[ORM\Column(type: 'integer')]
-    private $speed;
+    private ?int $speed;
 
     #[ORM\Column(type: 'integer')]
-    private $generation;
+    private ?int $generation;
 
     #[ORM\Column(type: 'boolean')]
     private $legendary;
 
-    #[ORM\ManyToOne(targetEntity: PokemonType::class, inversedBy: 'type2')]
-    #[ORM\JoinColumn(nullable: false)]
-    private $type1;
-
-    #[ORM\ManyToOne(targetEntity: PokemonType::class, inversedBy: 'pokemon')]
-    private $type2;
-
     #[ORM\Column(type: 'integer')]
-    private $gameId;
+    private ?int $gameId;
+
+    #[ORM\ManyToOne(targetEntity: PokemonType::class)]
+    private ?PokemonType $type1;
+
+    #[ORM\ManyToOne(targetEntity: PokemonType::class)]
+    private ?PokemonType $type2;
 
     public function getId(): ?int
     {
@@ -178,6 +184,18 @@ class Pokemon
         return $this;
     }
 
+    public function getGameId(): ?int
+    {
+        return $this->gameId;
+    }
+
+    public function setGameId(int $gameId): self
+    {
+        $this->gameId = $gameId;
+
+        return $this;
+    }
+
     public function getType1(): ?PokemonType
     {
         return $this->type1;
@@ -198,18 +216,6 @@ class Pokemon
     public function setType2(?PokemonType $type2): self
     {
         $this->type2 = $type2;
-
-        return $this;
-    }
-
-    public function getGameId(): ?int
-    {
-        return $this->gameId;
-    }
-
-    public function setGameId(int $gameId): self
-    {
-        $this->gameId = $gameId;
 
         return $this;
     }
