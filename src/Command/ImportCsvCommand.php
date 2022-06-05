@@ -5,10 +5,8 @@ namespace App\Command;
 use App\Entity\Pokemon;
 use App\Entity\PokemonType;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\PokemonTypeRepository;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -51,6 +49,7 @@ class ImportCsvCommand extends Command
             
             if($datas)
             {
+                $command_start = microtime(true);
                 // Import of the type of pokemon
                 $types = array();
                 foreach ($datas as $data)
@@ -97,12 +96,16 @@ class ImportCsvCommand extends Command
                     $this->entityManager->persist($pokemon);
                 }
                 $this->entityManager->flush();
+
+                $command_end = microtime(true);
+                $execution_time = ($command_end - $command_start);
+
+                $io->success('Import executed in ' . $execution_time . ' seconds !');
+
+                return Command::SUCCESS;
             }
         }
-
-        //$io->error('Vous n\'avez pas renseigner le chemin');
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
-
-        return Command::SUCCESS;
+        $io->success('Error');
+        return Command::FAILURE;
     }
 }
