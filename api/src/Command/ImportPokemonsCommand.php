@@ -3,6 +3,8 @@
 namespace App\Command;
 
 use App\Entity\Pokemon;
+use App\Entity\Type;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -20,8 +22,12 @@ class ImportPokemonsCommand extends Command
 {
     private EntityManagerInterface $entityManager;
 
+    /** @var array<string, Type> */
+    private array $types;
+
     /** @var array<int, Pokemon> */
     private array $pokemonIds;
+
     /** @var string[] */
     private array $duplicated;
 
@@ -38,6 +44,7 @@ class ImportPokemonsCommand extends Command
             ->addArgument('url', InputArgument::REQUIRED, 'URL of the CSV file to import')
             ->addUsage('app:import-pokemons https://github.com/SogecDigital/Test-Pokemon/raw/nino/pokemon.csv')
         ;
+
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -81,9 +88,13 @@ class ImportPokemonsCommand extends Command
                 continue;
             }
 
+            $types = $this->addTypeToCollection($lineData['type_1'] ?? null);
+            $types = $this->addTypeToCollection($lineData['type_2'] ?? null, $types);
+
             unset($lineData['type_1'], $lineData['type_2']);
 
             $pokemon = new Pokemon(...$lineData);
+            $pokemon->types = $types;
             $this->entityManager->persist($pokemon);
 
             $this->pokemonIds[$pokemon->id] = true;
@@ -97,7 +108,6 @@ class ImportPokemonsCommand extends Command
         }
 
         $io->success("$added pokemons imported.");
-
 
         return Command::SUCCESS;
     }
@@ -128,5 +138,18 @@ class ImportPokemonsCommand extends Command
             static fn ($field) => '#' === $field ? 'id' : mb_strtolower(str_replace(['. ', ' '], '_', $field)),
             $fields
         );
+    }
+
+    private function addTypeToCollection(?string $name, ArrayCollection $collection = new ArrayCollection()): ArrayCollection
+    {
+        if (empty($name)) {
+            return $collection;
+        }
+
+        $this->types[$name] = $this->types[$name]
+            ?? $this->entityManager->getRepository(Type::class)->findOneByNameOrNew($name);
+        $collection->add($this->types[$name]);
+
+        return $collection;
     }
 }
