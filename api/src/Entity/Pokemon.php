@@ -24,12 +24,15 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Delete(),
         new Patch(),
     ],
-    normalizationContext: ['groups' => [self::NORMALIZATION]],
+    normalizationContext: ['groups' => [self::DENORMALIZATION, self::NORMALIZATION]],
+    denormalizationContext: ['groups' => [self::DENORMALIZATION]],
     paginationClientItemsPerPage: true,
     paginationItemsPerPage: 50,
 )]
 class Pokemon
 {
+    public const DENORMALIZATION = 'pokemon_write';
+
     public const NORMALIZATION = 'pokemon_read';
 
     /** @var Collection<int, Type> */
@@ -40,33 +43,33 @@ class Pokemon
 
     public function __construct(
         #[ORM\Column]
-        #[Groups(Pokemon::NORMALIZATION)]
+        #[Groups(Pokemon::DENORMALIZATION)]
         #[ApiFilter(SearchFilter::class, strategy: 'ipartial')]
         public string $name,
         #[ORM\Column]
-        #[Groups(Pokemon::NORMALIZATION)]
+        #[Groups(Pokemon::DENORMALIZATION)]
         public int $hp,
         #[ORM\Column]
-        #[Groups(Pokemon::NORMALIZATION)]
+        #[Groups(Pokemon::DENORMALIZATION)]
         public int $attack,
         #[ORM\Column]
-        #[Groups(Pokemon::NORMALIZATION)]
+        #[Groups(Pokemon::DENORMALIZATION)]
         public int $defense,
         #[ORM\Column]
-        #[Groups(Pokemon::NORMALIZATION)]
+        #[Groups(Pokemon::DENORMALIZATION)]
         public int $sp_atk,
         #[ORM\Column]
-        #[Groups(Pokemon::NORMALIZATION)]
+        #[Groups(Pokemon::DENORMALIZATION)]
         public int $sp_def,
         #[ORM\Column]
-        #[Groups(Pokemon::NORMALIZATION)]
+        #[Groups(Pokemon::DENORMALIZATION)]
         public int $speed,
         #[ORM\Column(type: 'smallint')]
-        #[Groups(Pokemon::NORMALIZATION)]
+        #[Groups(Pokemon::DENORMALIZATION)]
         #[ApiFilter(NumericFilter::class)]
         public int $generation,
         #[ORM\Column]
-        #[Groups(Pokemon::NORMALIZATION)]
+        #[Groups([Pokemon::DENORMALIZATION])]
         #[ApiFilter(BooleanFilter::class)]
         public bool $legendary,
         #[ORM\Column]
