@@ -22,8 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new Get(),
         new GetCollection(),
-        new Delete(),
-        new Patch(),
+        new Delete(security: 'is_granted("POKEMON_DELETE", object)'),
+        new Patch(security: 'is_granted("POKEMON_DELETE", object)'),
     ],
     normalizationContext: ['groups' => [self::DENORMALIZATION, self::NORMALIZATION]],
     denormalizationContext: ['groups' => [self::DENORMALIZATION]],
