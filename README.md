@@ -23,39 +23,39 @@ Type 2	Total	HP	Attack	Defense	Sp. Atk	Sp. Def	Speed	Generation	Legendary
 ## Actions sur l'API:
 ### Inscription:
 
-- Email et mot de passe obligatoire
-- Le champs email doit être un email valide et unique
-- Le champs mot de passe doit comporter au minimum **8 caractères**, **une majuscule**, **une miniscule** et **un caractère spécial** ``,;:?./@#"'{}[]-_()$*%=+``
-- Contrôle et retour d'erreur si les champs ne sont pas valide
+- [X] Email et mot de passe obligatoire
+- [X] Le champs email doit être un email valide et unique
+- [X] Le champs mot de passe doit comporter au minimum **8 caractères**, **une majuscule**, **une miniscule** et **un caractère spécial** ``,;:?./@#"'{}[]-_()$*%=+``
+- [X] Contrôle et retour d'erreur si les champs ne sont pas valide
 
 ### Connexion:
 L’utilisateur doit pouvoir se connecter avec:
 - email
 - mot de passe
 
-Une fois connecté, un **token** devra être généré pour le reste de l'utilisation de l'API
+- [X] Une fois connecté, un **token** devra être généré pour le reste de l'utilisation de l'API
 
 ## Pokémon:
 
 ### Index / Show:
-- Route publique
-- Pouvoir voir un Pokémon spécifique grâce à son **ID**
-- Renvoie la liste de Pokémon 50 par 50
-- Possibilité de changer de page et de changer le nombre de ligne affiché
-- Possibilité de filtrer / rechercher par
-  - Nom
-  - Type
-  - Génération
-  - Légendaire
+- [X] Route publique
+- [X] Pouvoir voir un Pokémon spécifique grâce à son **ID**
+- [X] Renvoie la liste de Pokémon 50 par 50
+- [X] Possibilité de changer de page et de changer le nombre de ligne affiché
+- [X] Possibilité de filtrer / rechercher par
+  - [X] Nom
+  - [X] Type
+  - [X] Génération
+  - [X] Légendaire
 
 ### Edit / Delete:
-- Route privée
-- Ne pas pouvoir éditer / supprimer un Pokémon Légendaire
+- [X] Route privée
+- [X] Ne pas pouvoir éditer / supprimer un Pokémon Légendaire
 - Possibilité d'éditer
-    - Nom
-    - Type (changer parmis les types présents. Pas de possibilité d'en ajouter)
-    - Génération
-    - Légendaire
+  - [X] Nom
+  - [ ] Type (changer parmis les types présents. Pas de possibilité d'en ajouter)
+  - [X] Génération
+  - [X] Légendaire
 
 ## Nice to have :
 
