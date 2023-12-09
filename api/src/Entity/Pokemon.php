@@ -11,7 +11,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-
 #[ORM\Entity]
 #[ApiResource(
     shortName: 'Pokemon',
@@ -30,42 +29,41 @@ class Pokemon
 
     public function __construct(
         #[ORM\Column]
-        public string   $name,
+        public string $name,
 
         #[ORM\Column]
-        public int      $hp,
+        public int $hp,
 
         #[ORM\Column]
-        public int      $attack,
+        public int $attack,
 
         #[ORM\Column]
-        public int      $defense,
+        public int $defense,
 
         #[ORM\Column]
-        public int      $sp_atk,
+        public int $sp_atk,
 
         #[ORM\Column]
-        public int      $sp_def,
+        public int $sp_def,
 
         #[ORM\Column]
-        public int      $speed,
+        public int $speed,
 
         #[ORM\Column(type: 'smallint')]
-        public int      $generation,
+        public int $generation,
 
         #[ORM\Column]
-        public bool     $legendary,
+        public bool $legendary,
 
         #[ORM\Column]
-        public int  $total = 0,
+        public int $total = 0,
 
         #[ORM\Id]
         #[ORM\Column]
         public readonly ?int $id = null,
 
         Collection|array $types = new ArrayCollection(),
-    )
-    {
+    ) {
         $this->types = $types instanceof Collection ? $types : new ArrayCollection($types);
     }
 
