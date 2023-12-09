@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ApiResource(
@@ -45,28 +46,39 @@ class Pokemon
         #[ORM\Column]
         #[Groups(Pokemon::DENORMALIZATION)]
         #[ApiFilter(SearchFilter::class, strategy: 'ipartial')]
+        #[Assert\NotBlank]
         public string $name,
         #[ORM\Column]
         #[Groups(Pokemon::DENORMALIZATION)]
+        #[Assert\Positive]
         public int $hp,
         #[ORM\Column]
         #[Groups(Pokemon::DENORMALIZATION)]
+        #[Assert\Positive]
         public int $attack,
         #[ORM\Column]
         #[Groups(Pokemon::DENORMALIZATION)]
+        #[Assert\Positive]
         public int $defense,
         #[ORM\Column]
         #[Groups(Pokemon::DENORMALIZATION)]
+        #[Assert\Positive]
         public int $sp_atk,
         #[ORM\Column]
         #[Groups(Pokemon::DENORMALIZATION)]
+        #[Assert\Positive]
         public int $sp_def,
         #[ORM\Column]
         #[Groups(Pokemon::DENORMALIZATION)]
+        #[Assert\Positive]
         public int $speed,
         #[ORM\Column(type: 'smallint')]
         #[Groups(Pokemon::DENORMALIZATION)]
         #[ApiFilter(NumericFilter::class)]
+        #[Assert\Range(
+            min: 1,
+            max: 10,
+        )]
         public int $generation,
         #[ORM\Column]
         #[Groups([Pokemon::DENORMALIZATION])]
