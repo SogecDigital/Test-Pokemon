@@ -38,7 +38,7 @@ class Pokemon
 
     /** @var Collection<int, Type> */
     #[ORM\ManyToMany(targetEntity: Type::class, cascade: ['persist'])]
-    #[Groups(Pokemon::NORMALIZATION)]
+    #[Groups(Pokemon::DENORMALIZATION)]
     #[ApiFilter(SearchFilter::class, properties: ['types.name'])]
     public Collection $types;
 

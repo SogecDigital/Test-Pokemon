@@ -19,7 +19,7 @@ class Type
 
     public function __construct(
         #[ORM\Column(length: 255, unique: true)]
-        #[Groups(Pokemon::NORMALIZATION)]
+        #[Groups(Pokemon::DENORMALIZATION)]
         public string $name
     ) {
     }
