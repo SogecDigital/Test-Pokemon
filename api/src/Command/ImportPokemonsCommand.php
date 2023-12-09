@@ -93,6 +93,8 @@ class ImportPokemonsCommand extends Command
 
             unset($lineData['type_1'], $lineData['type_2']);
 
+            $lineData['legendary'] = $lineData['legendary'] === 'True';
+
             $pokemon = new Pokemon(...$lineData);
             $pokemon->types = $types;
             $this->entityManager->persist($pokemon);
