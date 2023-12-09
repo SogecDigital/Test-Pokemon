@@ -38,7 +38,7 @@ class Pokemon
 
     /** @var Collection<int, Type> */
     #[ORM\ManyToMany(targetEntity: Type::class, cascade: ['persist'])]
-    #[Groups(Pokemon::DENORMALIZATION)]
+    #[Groups(Pokemon::NORMALIZATION)]
     #[ApiFilter(SearchFilter::class, properties: ['types.name'])]
     public Collection $types;
 
@@ -49,27 +49,27 @@ class Pokemon
         #[Assert\NotBlank]
         public string $name,
         #[ORM\Column]
-        #[Groups(Pokemon::DENORMALIZATION)]
+        #[Groups(Pokemon::NORMALIZATION)]
         #[Assert\Positive]
         public int $hp,
         #[ORM\Column]
-        #[Groups(Pokemon::DENORMALIZATION)]
+        #[Groups(Pokemon::NORMALIZATION)]
         #[Assert\Positive]
         public int $attack,
         #[ORM\Column]
-        #[Groups(Pokemon::DENORMALIZATION)]
+        #[Groups(Pokemon::NORMALIZATION)]
         #[Assert\Positive]
         public int $defense,
         #[ORM\Column]
-        #[Groups(Pokemon::DENORMALIZATION)]
+        #[Groups(Pokemon::NORMALIZATION)]
         #[Assert\Positive]
         public int $sp_atk,
         #[ORM\Column]
-        #[Groups(Pokemon::DENORMALIZATION)]
+        #[Groups(Pokemon::NORMALIZATION)]
         #[Assert\Positive]
         public int $sp_def,
         #[ORM\Column]
-        #[Groups(Pokemon::DENORMALIZATION)]
+        #[Groups(Pokemon::NORMALIZATION)]
         #[Assert\Positive]
         public int $speed,
         #[ORM\Column(type: 'smallint')]
