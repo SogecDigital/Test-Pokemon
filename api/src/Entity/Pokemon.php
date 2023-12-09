@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ApiResource(
-    shortName: 'Pokemon',
     operations: [
         new Get(),
         new GetCollection(),
