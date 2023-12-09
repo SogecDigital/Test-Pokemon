@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -36,6 +40,7 @@ class Pokemon
     public function __construct(
         #[ORM\Column]
         #[Groups(Pokemon::NORMALIZATION)]
+        #[ApiFilter(SearchFilter::class, strategy: 'ipartial')]
         public string $name,
         #[ORM\Column]
         #[Groups(Pokemon::NORMALIZATION)]
@@ -57,9 +62,11 @@ class Pokemon
         public int $speed,
         #[ORM\Column(type: 'smallint')]
         #[Groups(Pokemon::NORMALIZATION)]
+        #[ApiFilter(NumericFilter::class)]
         public int $generation,
         #[ORM\Column]
         #[Groups(Pokemon::NORMALIZATION)]
+        #[ApiFilter(BooleanFilter::class)]
         public bool $legendary,
         #[ORM\Column]
         public int $total = 0,
